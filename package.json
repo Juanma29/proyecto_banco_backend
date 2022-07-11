@@ -12,8 +12,10 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/node": "^18.0.1",
     "@types/validator": "^13.7.4",
+    "bcrypt": "^5.0.1",
     "readline-promise": "^1.0.5",
     "readline-sync": "^1.4.10",
     "validator": "^13.7.0"

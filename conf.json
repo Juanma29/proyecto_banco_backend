@@ -1,3 +1,9 @@
 {
-    "archivosUbicacion": "datos"
+    "archivosUbicacion": "datos",
+    "archivosHabilitado": true,
+
+    "databaseHabilitado": false,
+    "databaseHost": "127.0.0.1",
+    "databasePuerto": 27017,
+    "databaseNombre": "banco"
 }

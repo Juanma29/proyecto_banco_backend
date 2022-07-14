@@ -40,10 +40,11 @@ export class BancoArchivos {
 
     // guardar los id de todos los gestores en un array
     const ids = this.gestores.map(gestor => gestor.id);
-    if(ids.length > 0){
-    const idMaximo = Math.max(...ids);
-    this.idSiguiente = idMaximo + 1;
-  }
+    if(ids.length > 0) {
+      const idMaximo = Math.max(...ids);
+      this.idSiguiente = idMaximo + 1;
+    }
+
     mostrarGestores(this.gestores)
   }
 

@@ -22,7 +22,7 @@ export async function validarUsuario(
   }
 
   // si gestorExistente es undefined, entonces ha pasado la validación, pero si existe, entonces mostramos una advertencia y retornamos
-  const gestorExistente = await w.bancoArchivos.obtenerGestorPorUsuario(usuario);
+  const gestorExistente = await w.bancoDatabase.obtenerGestorPorUsuario(usuario);
   if(gestorExistente) {
     return 'Ya existe un gestor con el mismo nombre de usuario';
   }
@@ -51,7 +51,7 @@ export async function validarCorreo(
     return 'No es un email válido';
   }
   
-  const gestorExistente2 = await w.bancoArchivos.obtenerGestorPorCorreo(correo);
+  const gestorExistente2 = await w.bancoDatabase.obtenerGestorPorCorreo(correo);
   if(gestorExistente2) {
     return 'Ya existe un gestor con el mismo correo';
   }

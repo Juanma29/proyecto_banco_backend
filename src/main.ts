@@ -5,7 +5,7 @@ import { BancoArchivos } from './almacenamiento/banco-archivos';
 import { mostrarMenuPrincipal } from './menu/menu-principal';
 import { Wrapper } from './modelos/wrapper';
 import readline from 'readline-promise';
-import { validarConfiguracion } from './validaciones/vallidacion-configuracion';
+import { validarConfiguracion } from './validaciones/validacion-configuracion';
 import { BancoDatabase } from './almacenamiento/banco-database';
 
 async function main() {
@@ -41,6 +41,17 @@ async function main() {
 }
 
 main();
+// import randomEmail from 'random-email';
+
+// for (let index = 0; index < 100; index++) {
+//   console.log(randomEmail({domain: 'banco.es'}))
+// }
+
+// import { uniqueNamesGenerator, adjectives, colors, animals, names } from'unique-names-generator';
+
+// const randomName = uniqueNamesGenerator({ dictionaries: [names] }); // big_red_donkey
+// console.log(randomName);
+
 
 
 // console.log(conf.archivosUbicacion);

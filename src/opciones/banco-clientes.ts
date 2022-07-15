@@ -10,4 +10,8 @@ export class BancoGestores {
     this.w = w;
   }
 
+  async insertarCliente() {
+    
+  }
+
 }

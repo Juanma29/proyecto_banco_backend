@@ -1,3 +1,4 @@
 dist/
 node_modules/
 datos/
+conf.json

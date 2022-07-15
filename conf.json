@@ -5,5 +5,12 @@
     "databaseHabilitado": true,
     "databaseHost": "127.0.0.1",
     "databasePuerto": 27017,
-    "databaseNombre": "banco"
+    "databaseNombre": "banco",
+
+    "smtpHost": "smtp.gmail.com",
+    "smtpPuerto": 465,
+    "smtpUsuario": "pepitonode@gmail.com",
+    "smtpPassword": "rhncigxanbrurjnf",
+
+    "autenticacionHabilitado": false
 }

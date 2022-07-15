@@ -115,6 +115,23 @@ export class BancoGestores {
     }
 
   }
+  
+  async mostrarGestoresConPaginacion(w: Wrapper) {
+
+    const numPagina: number = +(await w.rlp.questionAsync("Número de página: "));
+    const numElementos: number = +(await w.rlp.questionAsync("Número de elementos: "));
+
+    if((isNaN(numPagina)) || (numPagina < 1)) {
+      console.log('Número de página incorrecto');
+      return;  
+    }
+
+    if((isNaN(numElementos)) || (numElementos < 1)) {
+      console.log('Número de elementos incorrecto');
+      return;  
+    }
+
+  }
 
   async eliminarGestorPorId(w: Wrapper) {
     const id: string = await w.rlp.questionAsync('Introduzca el id del gestor a eliminar: ');

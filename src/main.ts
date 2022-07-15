@@ -7,12 +7,20 @@ import { Wrapper } from './modelos/wrapper';
 import readline from 'readline-promise';
 import { validarConfiguracion } from './validaciones/validacion-configuracion';
 import { BancoDatabase } from './almacenamiento/banco-database';
+import { ModuloEmail } from './modulos/modulo-email';
+import { ModuloAutenticacion } from './modulos/modulo-autenticacion';
 
 async function main() {
   // __dirname = C:\workspace_backend\proyecto_banco_backend\dist
   // .. -> directorio superior (C:\workspace_backend\proyecto_banco_backend\)
   // C:\workspace_backend\proyecto_banco_backend\conf.json
   const rutaArchivo = path.join(__dirname, '..', 'conf.json');
+
+  if(!fs.existsSync(rutaArchivo)) {
+    console.log('No existe el archivo de configuración');
+    return;
+  }
+
   const datos = fs.readFileSync(rutaArchivo ).toString();
   const conf: Configuracion = JSON.parse(datos);
   const msg: string = validarConfiguracion(conf);
@@ -30,30 +38,18 @@ async function main() {
     conf,
     bancoArchivos: new BancoArchivos(conf),
     bancoDatabase,
+    moduloEmail: new ModuloEmail(conf),
+    moduloAutenticacion: null,
     rlp: readline.createInterface({
       input: process.stdin,
       output: process.stdout,
       terminal: false,
     })
   }
-  
+
+  w.moduloAutenticacion = new ModuloAutenticacion(w);
+
   await mostrarMenuPrincipal(w);
 }
 
 main();
-// import randomEmail from 'random-email';
-
-// for (let index = 0; index < 100; index++) {
-//   console.log(randomEmail({domain: 'banco.es'}))
-// }
-
-// import { uniqueNamesGenerator, adjectives, colors, animals, names } from'unique-names-generator';
-
-// const randomName = uniqueNamesGenerator({ dictionaries: [names] }); // big_red_donkey
-// console.log(randomName);
-
-
-
-// console.log(conf.archivosUbicacion);
-
-// console.log(__dirname);

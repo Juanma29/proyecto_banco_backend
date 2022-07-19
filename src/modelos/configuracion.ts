@@ -1,3 +1,4 @@
+import express from 'express';
 export interface Configuracion {
   archivosUbicacion: string;
   archivosHabilitado: boolean;
@@ -12,5 +13,7 @@ export interface Configuracion {
   smtpUsuario: string,
   smtpPassword: string,
   
-  autenticacionHabilitado: boolean
+  autenticacionHabilitado: boolean,
+
+  expressPuerto: number
 }

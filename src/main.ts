@@ -9,6 +9,8 @@ import { validarConfiguracion } from './validaciones/validacion-configuracion';
 import { BancoDatabase } from './almacenamiento/banco-database';
 import { ModuloEmail } from './modulos/modulo-email';
 import { ModuloAutenticacion } from './modulos/modulo-autenticacion';
+import { ModuloExpress } from './modulos/modulo-express';
+import { ModuloAutenticacionWeb } from './modulos/modulo-autenticacion-web';
 
 async function main() {
   // __dirname = C:\workspace_backend\proyecto_banco_backend\dist
@@ -33,23 +35,28 @@ async function main() {
   // const bancoArchivos = new BancoArchivos(conf);
   const bancoDatabase = new BancoDatabase(conf);
   await bancoDatabase.conectar();
-
+  
   const w: Wrapper = {
     conf,
     bancoArchivos: new BancoArchivos(conf),
     bancoDatabase,
     moduloEmail: new ModuloEmail(conf),
     moduloAutenticacion: null,
+    moduloAutenticacionWeb: null,
+    moduloExpress: null,
     rlp: readline.createInterface({
       input: process.stdin,
       output: process.stdout,
       terminal: false,
     })
-  }
-
+  } as Wrapper
+  
+  w.moduloAutenticacionWeb = new ModuloAutenticacionWeb(w);
+  w.moduloExpress = new ModuloExpress(w);
   w.moduloAutenticacion = new ModuloAutenticacion(w);
 
-  await mostrarMenuPrincipal(w);
+  // await mostrarMenuPrincipal(w);
 }
 
 main();
+

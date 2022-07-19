@@ -1,15 +1,13 @@
+import { Gestor } from './../modelos/gestor';
 import { Configuracion } from '../modelos/configuracion';
 import { Collection, MongoClient } from 'mongodb';
-import { Gestor } from '../modelos/gestor';
 
 export class BancoDatabase {
-  obtenerNumeroGestores() {
-    throw new Error('Method not implemented.');
-  }
 
   // atributos
   private conf: Configuracion;
   private cGestores: Collection<Gestor>
+  // private cClientes: Collection<Cliente>
   private idSiguiente: number = 1;
 
   constructor(conf: Configuracion) {
@@ -58,6 +56,37 @@ export class BancoDatabase {
 
   }
 
+  async obtenerGestoresPorPaginacion(
+    numPagina: number, 
+    numElementos: number): Promise<Gestor[]> 
+    {
+
+    /*
+    suponiendo que numElementos = 10:
+
+      numPagina = 1 --> skip = 0
+      numPagina = 2 --> skip = 10 -> (numPagina - 1) * numElementos = 10
+      numPagina = 3 --> skip = 20 -> (numPagina - 1) * numElementos = 20
+      numPagina = 4 --> skip = 30
+    */
+
+    const skip = (numPagina - 1) * numElementos;
+    const gestores = await this.cGestores
+      .find({})
+      .skip(skip)
+      .limit(numElementos)
+      .toArray();
+    
+    return gestores;
+  }
+
+  async obtenerGestorPorId(id: number): Promise<Gestor> {
+    const gestor = await this.cGestores.findOne({
+      id
+    })
+    return gestor;
+  }
+
   async obtenerGestorPorCorreo(correo: string): Promise<Gestor> {
     const gestor = await this.cGestores.findOne({
       correo
@@ -78,6 +107,18 @@ export class BancoDatabase {
     this.idSiguiente++;
   }
 
+  async actualizarGestor(gestor: Gestor) {
+    await this.cGestores.updateOne({
+      usuario: gestor.usuario 
+    }, {
+      "$set": {
+        usuario: gestor.usuario,
+        password: gestor.password,
+        correo: gestor.correo
+      }
+    })
+  }
+
   async eliminarGestorPorId(id: number) {
     await this.cGestores.deleteOne({
       id
@@ -86,5 +127,9 @@ export class BancoDatabase {
 
   async eliminarGestores() {
     await this.cGestores.deleteMany({});
+  }
+
+  async obtenerNumeroGestores(): Promise<number> {
+    return await this.cGestores.countDocuments({});
   }
 }

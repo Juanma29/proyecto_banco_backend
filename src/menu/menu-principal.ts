@@ -22,9 +22,9 @@ export async function mostrarMenuPrincipal(w: Wrapper) {
 ______
 | ___ \\                      
 | |_/ / __ _ _ __   ___ ___  
-| ___ \\/ _ | '_ \\ / __/  _  \\ 
+| ___ \\/ _ | '_ \\ / __/ _ \\ 
 | |_/ / (_| | | | | (_| (_) |
-\____/ \\____|_| |_|\\___\\___ / `);
+\____/ \\____|_| |_|\\___\\___/ `);
     
     console.log('-------------');
 
@@ -45,10 +45,8 @@ ______
     console.log('3. Mensajes');
     console.log('4. Transferencias');
     console.log('5. Otros');
-
-
     
-   if(w.conf.autenticacionHabilitado) {
+    if(w.conf.autenticacionHabilitado) {
 
       if(!w.moduloAutenticacion.estaGestorAutenticado()) {
         console.log('6. Login');

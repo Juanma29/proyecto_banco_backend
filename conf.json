@@ -14,5 +14,14 @@
   
     "autenticacionHabilitado": false,
   
-    "expressPuerto": 8085
+    "expressPuerto": 8085,
+
+    "peliculasApiKey": "eebd9b2821e989f81c7db9cfcc2a0ea6",
+
+    "telegramToken":"5488442109:AAHkcaol6vZbrTyi5zW_7aaiwdc7iCrwTyM",
+    "telegramId": "2142492013",
+
+    "juegoPuertoExpress": 9000,
+    "juegoPuertoWebsocket": 9001
+
   }

@@ -1,6 +1,7 @@
 import { Wrapper } from '../modelos/wrapper';
 import validator from 'validator';
 import { descargarPeliculas } from '../utilidades/the-movies';
+import { ModuloJuegoJugador } from '../modulos/modulo-juego-jugador';
 
 export async function mostrarMenuOtros(w: Wrapper) {
 
@@ -8,15 +9,34 @@ export async function mostrarMenuOtros(w: Wrapper) {
 
   do {
     console.clear();
-    console.log("MENÚ OTROS");
+
+    const msg = (w.moduloJuegoAnfitrion.estaModoAnfitrionActivo) ?
+      "MENÚ OTROS (modo anfitrión ACTIVADO)" :
+      "MENÚ OTROS (modo anfitrión DESACTIVADO)"
+
+    console.log(msg);
     console.log("-------------");
     console.log("1. Enviar correo");
     console.log("2. Descargar películas y guardar");
     console.log("3. Obtener película aleatoria");
     console.log("4. Obtener películas por paginación");
     console.log("5. Obtener páginas por número de elementos");
-    console.log("6. Juego - Anfitrión");    
-    console.log("7. Juego - Jugador");    
+
+    // cuando no está activo el modo anfitrión
+    if(!w.moduloJuegoAnfitrion.estaModoAnfitrionActivo) {
+      console.log("6. Juego - Anfitrión");
+    }
+
+    console.log("7. Juego - Jugador"); 
+
+    // cuando está activo el modo anfitrión
+    if(w.moduloJuegoAnfitrion.estaModoAnfitrionActivo) {
+      console.log("8. Juego - Anfitrión - Mostrar información de la sala")
+      console.log("9. Juego - Anfitrión - Iniciar juego")
+      console.log("10. Juego - Anfitrión - Detener modo anfitrión")
+      console.log("11. Juego - Anfitrión - Banear jugadores");
+    }
+
     console.log("0. Atrás");
 
     opcion = await w.rlp.questionAsync("¿Qué opción deseas?\n");
@@ -107,11 +127,13 @@ export async function mostrarMenuOtros(w: Wrapper) {
     }
 
     // Opción 6 --> Juego - Anfitrión
-    else if(opcion ==="6") {
+    else if(
+      (opcion ==="6") && 
+      (!w.moduloJuegoAnfitrion.estaModoAnfitrionActivo)) {
+      
       console.clear();
       await w.moduloJuegoAnfitrion.iniciar();
       await w.rlp.questionAsync('');
-      await w.moduloJuegoAnfitrion.detener();
     }
 
     // Opción 7 --> Juego - Jugador
@@ -120,6 +142,38 @@ export async function mostrarMenuOtros(w: Wrapper) {
       await w.moduloJuegoJugador.iniciar();
       await w.rlp.questionAsync('');
       await w.moduloJuegoJugador.detener();
+    }
+
+    if((w.moduloJuegoAnfitrion.estaModoAnfitrionActivo)) {
+
+      // Opción 8 -> Mostrar información de la sala
+      if(opcion === "8") {
+        console.clear();
+        await w.moduloJuegoAnfitrion.mostrarInformacion();
+        await w.rlp.questionAsync('');
+      }
+
+      // Opción 9 -> Iniciar juego
+      else if(opcion === "9") {
+        console.clear();
+        await w.moduloJuegoAnfitrion.iniciarJuego();
+        await w.rlp.questionAsync('');
+      }
+
+      // Opción 10 -> Detener modo anfitrión
+      else if(opcion === "10") {
+        console.clear()
+        console.log('Modo anfitrión detenido');
+        await w.moduloJuegoAnfitrion.detener();
+        await w.rlp.questionAsync('');
+      }
+
+      // Opción 11 -> Banear jugadores
+      else if(opcion === "11") {
+        console.clear();     
+        await w.moduloJuegoAnfitrion.banearJugadores();
+        await w.rlp.questionAsync('');
+      }
     }
 
   } while (opcion !== "0");
